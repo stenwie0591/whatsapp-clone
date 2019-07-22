@@ -13,7 +13,7 @@ const Container = styled.div`
 const MessageItem = styled.div`
   float: right;
   background-color: #dcf8c6;
-  display: inline-block;
+  /* display: inline-block; */
   position: relative;
   max-width: 100%;
   border-radius: 7px;
