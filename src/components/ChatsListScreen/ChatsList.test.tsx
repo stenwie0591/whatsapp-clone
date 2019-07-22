@@ -11,7 +11,6 @@ import ChatsList from './ChatsList';
 import { createBrowserHistory } from 'history';
 
 describe('ChatsList', () => {
-
   afterEach(() => {
     cleanup();
     window.location.pathname = '/';
@@ -79,7 +78,7 @@ describe('ChatsList', () => {
       await waitForDomChange({ container });
 
       fireEvent.click(getByTestId('chat'));
-      
+
       await wait(() => expect(history.location.pathname).toEqual('/chats/1'));
     }
   });

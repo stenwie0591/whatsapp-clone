@@ -95,20 +95,20 @@ const ChatsList: React.FC<ChatsListProps> = ({ history }) => {
   }, []);
 
   const navToChat = useCallback(
-    (chat) => {
+    chat => {
       history.push(`chats/${chat.id}`);
     },
     [history]
-  )
+  );
 
   return (
     <Container>
       <StyledList>
         {chats.map(chat => (
-          <StyledListItem 
-            key={chat.id} 
+          <StyledListItem
+            key={chat.id}
             button
-            data-testid='chat'
+            data-testid="chat"
             onClick={navToChat.bind(null, chat)}>
             <ChatPicture
               data-testid="picture"

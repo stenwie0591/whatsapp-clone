@@ -10,7 +10,6 @@ import ChatsListScreen from './components/ChatsListScreen';
 import AnimatedSwitch from './components/AnimatedSwitch';
 
 const App: React.FC = () => {
-  
   const redirectToChats = () => <Redirect to="/chats" />;
 
   return (
