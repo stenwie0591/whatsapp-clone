@@ -1,4 +1,6 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback } from 'react';
+import { useApolloClient, useQuery } from 'react-apollo-hooks';
+import gql from 'graphql-tag';
 import styled from 'styled-components';
 import ChatNavbar from './ChatNavbar';
 import MessageInput from './MessageInput';
@@ -12,7 +14,7 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const getChatQuery = `
+const getChatQuery = gql`
   query GetChat($chatId: ID!) {
     chat(chatId: $chatId) {
       id
@@ -51,50 +53,41 @@ const ChatRoomScreen: React.FC<ChatRoomScreenParams> = ({
   chatId,
   history,
 }) => {
-  const [chat, setChat] = useState<OptionalChatQueryResult>(null);
-
-  useMemo(async () => {
-    const body = await fetch(`${process.env.REACT_APP_SERVER_URL}/graphql`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: getChatQuery,
-        variables: { chatId },
-      }),
-    });
-
-    const {
-      data: { chat },
-    } = await body.json();
-    setChat(chat);
-  }, [chatId]);
-
+  const client = useApolloClient();
+  const { data } = useQuery<any>(getChatQuery, {
+    variables: { chatId },
+  });
   const onSendMessage = useCallback(
     (content: string) => {
-      if (!chat) return null;
+      if (!data.chat) return null;
 
       const message = {
-        id: (chat.messages.length + 10).toString(),
+        id: (data.chat.messages.length + 10).toString(),
         createdAt: new Date(),
         content,
+        __typename: 'Chat',
       };
 
-      setChat({
-        ...chat,
-        messages: chat.messages.concat(message),
+      client.writeQuery({
+        query: getChatQuery,
+        variables: { chatId },
+        data: {
+          chat: {
+            ...data.chat,
+            messages: data.chat.messages.concat(message),
+          },
+        },
       });
     },
-    [chat]
+    [data, chatId, client]
   );
 
-  if (!chat) return null;
+  if (!data) return null;
 
   return (
     <Container>
-      <ChatNavbar chat={chat} history={history} />
-      {chat.messages && <MessagesList messages={chat.messages} />}
+      <ChatNavbar chat={data.chat} history={history} />
+      {data.chat.messages && <MessagesList messages={data.chat.messages} />}
       <MessageInput onSendMessage={onSendMessage} />
     </Container>
   );
