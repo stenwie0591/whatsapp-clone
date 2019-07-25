@@ -8,9 +8,10 @@ import {
 import ChatRoomScreen from './components/ChatRoomScreen';
 import ChatsListScreen from './components/ChatsListScreen';
 import AnimatedSwitch from './components/AnimatedSwitch';
+import { useCacheService } from './services/cache.service';
 
 const App: React.FC = () => {
-  const redirectToChats = () => <Redirect to="/chats" />;
+  useCacheService();
 
   return (
     <BrowserRouter>
@@ -32,5 +33,7 @@ const App: React.FC = () => {
     </BrowserRouter>
   );
 };
+
+const redirectToChats = () => <Redirect to="/chats" />;
 
 export default App;
