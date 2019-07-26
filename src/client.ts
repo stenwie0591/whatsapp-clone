@@ -5,6 +5,11 @@ import { getMainDefinition } from 'apollo-utilities';
 import { WebSocketLink } from 'apollo-link-ws';
 import { ApolloLink, split } from 'apollo-link';
 
+interface Definintion {
+  kind: string;
+  operation?: string;
+};
+
 const httpUri = process.env.REACT_APP_SERVER_URL + '/graphql';
 const wsUri = httpUri.replace(/^https?/, 'ws');
 
@@ -22,7 +27,7 @@ const wsLink = new WebSocketLink({
 
 const terminatingLink = split(
   ({ query }) => {
-    const { kind, operation } = getMainDefinition(query);
+    const { kind, operation }: Definintion = getMainDefinition(query);
     // If this is a subscription query, use wsLink, otherwise use httpLink
     return kind === 'OperationDefinition' && operation === 'subscription';
   },
