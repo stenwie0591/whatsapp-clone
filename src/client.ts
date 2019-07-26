@@ -8,13 +8,14 @@ import { ApolloLink, split } from 'apollo-link';
 interface Definintion {
   kind: string;
   operation?: string;
-};
+}
 
 const httpUri = process.env.REACT_APP_SERVER_URL + '/graphql';
 const wsUri = httpUri.replace(/^https?/, 'ws');
 
 const httpLink = new HttpLink({
   uri: httpUri,
+  credentials: 'include',
 });
 
 const wsLink = new WebSocketLink({
