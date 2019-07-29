@@ -1,7 +1,7 @@
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
 import { getMainDefinition } from 'apollo-utilities';
+import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { ApolloLink, split } from 'apollo-link';
 
@@ -10,6 +10,7 @@ const wsUri = httpUri.replace(/^https?/, 'ws');
 
 const httpLink = new HttpLink({
   uri: httpUri,
+  credentials: 'include',
 });
 
 const wsLink = new WebSocketLink({
@@ -20,9 +21,14 @@ const wsLink = new WebSocketLink({
   },
 });
 
+interface Definintion {
+  kind: string;
+  operation?: string;
+}
+
 const terminatingLink = split(
   ({ query }) => {
-    const { kind, operation } = getMainDefinition(query);
+    const { kind, operation }: Definintion = getMainDefinition(query);
     // If this is a subscription query, use wsLink, otherwise use httpLink
     return kind === 'OperationDefinition' && operation === 'subscription';
   },

@@ -1,12 +1,14 @@
-import React, { useCallback } from 'react';
 import gql from 'graphql-tag';
+import React from 'react';
+import { useCallback } from 'react';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import ChatNavbar from './ChatNavbar';
 import MessageInput from './MessageInput';
 import MessagesList from './MessagesList';
 import { History } from 'history';
-import * as fragments from '../../graphql/fragments';
 import { useGetChatQuery, useAddMessageMutation } from '../../graphql/types';
+import * as fragments from '../../graphql/fragments';
 import { writeMessage } from '../../services/cache.service';
 
 const Container = styled.div`
@@ -42,12 +44,13 @@ interface ChatRoomScreenParams {
 }
 
 const ChatRoomScreen: React.FC<ChatRoomScreenParams> = ({
-  chatId,
   history,
+  chatId,
 }) => {
   const { data, loading } = useGetChatQuery({
     variables: { chatId },
   });
+
   const [addMessage] = useAddMessageMutation();
 
   const onSendMessage = useCallback(
@@ -68,6 +71,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenParams> = ({
               .toString(36)
               .substr(2, 9),
             createdAt: new Date(),
+            // isMine: true,
             chat: {
               __typename: 'Chat',
               id: chatId,
@@ -75,9 +79,9 @@ const ChatRoomScreen: React.FC<ChatRoomScreenParams> = ({
             content,
           },
         },
-        update: (client, { data: { addMessage } }) => {
-          writeMessage(client, addMessage);
-        },
+        // update: (client, { data: { addMessage } }) => {
+        //   writeMessage(client, addMessage);
+        // },
       });
     },
     [data, chatId, addMessage]
@@ -88,8 +92,14 @@ const ChatRoomScreen: React.FC<ChatRoomScreenParams> = ({
   }
   const chat = data.chat;
   const loadingChat = loading;
+
   if (loadingChat) return null;
   if (chat === null) return null;
+
+  // Chat was probably removed from cache by the subscription handler
+  if (!chat) {
+    return <Redirect to="/chats" />;
+  }
 
   return (
     <Container>
