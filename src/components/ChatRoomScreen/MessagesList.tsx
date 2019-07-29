@@ -1,11 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
 import moment from 'moment';
+import React from 'react';
+import { useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import styled, { css } from 'styled-components';
-
-type StyledProp = {
-  isMine: any;
-};
 
 const Container = styled.div`
   display: block;
@@ -13,6 +10,10 @@ const Container = styled.div`
   overflow-y: overlay;
   padding: 0 15px;
 `;
+
+type StyledProp = {
+  isMine: any;
+};
 
 const MessageItem = styled.div`
   display: inline-block;
@@ -46,6 +47,7 @@ const MessageItem = styled.div`
       ? css`
           float: right;
           background-color: #dcf8c6;
+
           &::before {
             right: -11px;
             background-image: url(/assets/message-mine.png);
@@ -54,6 +56,7 @@ const MessageItem = styled.div`
       : css`
           float: left;
           background-color: #fff;
+
           &::before {
             left: -11px;
             background-image: url(/assets/message-other.png);
@@ -84,7 +87,6 @@ interface Message {
   content: string | null;
   createdAt: string | null;
 }
-
 interface MessagesListProps {
   messages: Array<Message>;
 }
@@ -94,7 +96,6 @@ const MessagesList: React.FC<MessagesListProps> = ({ messages }) => {
 
   useEffect(() => {
     if (!selfRef.current) return;
-
     const selfDOMNode = ReactDOM.findDOMNode(selfRef.current) as HTMLElement;
     selfDOMNode.scrollTop = Number.MAX_SAFE_INTEGER;
   }, [messages.length]);

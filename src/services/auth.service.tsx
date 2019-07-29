@@ -1,10 +1,31 @@
+import React from 'react';
 import { useCallback } from 'react';
 import { useApolloClient } from 'react-apollo-hooks';
+import { Redirect } from 'react-router-dom';
+import { useCacheService } from './cache.service';
+
+export const withAuth = <P extends object>(
+  Component: React.ComponentType<P>
+) => {
+  return (props: any) => {
+    if (!isSignedIn()) {
+      if (props.history.location.pathname === '/sign-in') {
+        return null;
+      }
+
+      return <Redirect to="/sign-in" />;
+    }
+
+    useCacheService();
+
+    return <Component {...(props as P)} />;
+  };
+};
 
 export const signIn = (currentUserId: string) => {
   document.cookie = `currentUserId=${currentUserId}`;
 
-  //This will became async
+  // This will become async in the near future
   return Promise.resolve();
 };
 
@@ -16,7 +37,7 @@ export const useSignOut = () => {
     // be deleted by the browser. "expires" cannot be viewed from "document.cookie"
     document.cookie = `currentUserId=;expires=${new Date(0)}`;
 
-    //clear cache
+    // Clear cache
     return client.clearStore();
   }, [client]);
 };

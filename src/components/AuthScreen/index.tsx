@@ -34,6 +34,7 @@ const Title = styled.h2`
   color: white;
 `;
 
+// eslint-disable-next-line
 const Alternative = styled.div`
   position: fixed;
   bottom: 10px;
@@ -48,7 +49,7 @@ const SignInForm = styled.div`
   height: calc(100% - 265px);
 `;
 
-const ActulaForm = styled.form`
+const ActualForm = styled.form`
   padding: 20px;
 `;
 
@@ -62,10 +63,12 @@ const Legend = styled.legend`
   color: white;
 `;
 
+// eslint-disable-next-line
 const Label = styled.label`
   color: white !important;
 `;
 
+// eslint-disable-next-line
 const Input = styled.input`
   color: white;
 
@@ -131,15 +134,15 @@ const AuthScreen: React.FC<RouteComponentProps<any>> = ({ history }) => {
     <Container>
       <Intro>
         <Icon src="assets/whatsapp-icon.png" className="AuthScreen-icon" />
-        <Title className="AuthScreen-title">WhatsApp by peo</Title>
+        <Title className="AuthScreen-title">WhatsApp</Title>
       </Intro>
       <SignInForm>
-        <ActulaForm>
-          <Legend>Sign In</Legend>
+        <ActualForm>
+          <Legend>Sign in</Legend>
           <Section>
             <TextField
               data-testid="user-id-input"
-              label="UserID"
+              label="User ID"
               value={userId}
               onChange={onUserIdChange}
               margin="normal"
@@ -153,9 +156,9 @@ const AuthScreen: React.FC<RouteComponentProps<any>> = ({ history }) => {
             variant="contained"
             disabled={!maySignIn()}
             onClick={handleSignIn}>
-            Sign In
+            Sign in
           </Button>
-        </ActulaForm>
+        </ActualForm>
       </SignInForm>
     </Container>
   );
