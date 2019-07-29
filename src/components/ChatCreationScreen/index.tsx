@@ -58,7 +58,7 @@ const ChatCreationScreen: React.FC<ChildComponentProps> = ({ history }) => {
         variables: {
           recipientId: user.id,
         },
-      })
+      });
       // .then(({ data }) => {
       //   if (data !== null) {
       //     history.push(`/chats/${data.addChat.id}`);

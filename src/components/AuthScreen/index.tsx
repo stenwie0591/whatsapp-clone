@@ -134,7 +134,7 @@ const AuthScreen: React.FC<RouteComponentProps<any>> = ({ history }) => {
     <Container>
       <Intro>
         <Icon src="assets/whatsapp-icon.png" className="AuthScreen-icon" />
-        <Title className="AuthScreen-title">WhatsApp</Title>
+        <Title className="AuthScreen-title">VazzApp by peo</Title>
       </Intro>
       <SignInForm>
         <ActualForm>
@@ -156,7 +156,7 @@ const AuthScreen: React.FC<RouteComponentProps<any>> = ({ history }) => {
             variant="contained"
             disabled={!maySignIn()}
             onClick={handleSignIn}>
-            Sign in
+            Trasa Cumbà
           </Button>
         </ActualForm>
       </SignInForm>
