@@ -35,9 +35,9 @@ interface ChildComponentProps {
 
 const ChatCreationScreen: React.FC<ChildComponentProps> = ({ history }) => {
   const [addChat] = useAddChatMutation({
-    // update: (client, { data: { addChat } }) => {
-    //   writeChat(client, addChat);
-    // },
+    update: (client, { data: { addChat } }) => {
+      writeChat(client, addChat);
+    },
   });
 
   const onUserPick = useCallback(
@@ -58,12 +58,11 @@ const ChatCreationScreen: React.FC<ChildComponentProps> = ({ history }) => {
         variables: {
           recipientId: user.id,
         },
+      }).then(({ data }) => {
+        if (data !== null) {
+          history.push(`/chats/${data.addChat.id}`);
+        }
       });
-      // .then(({ data }) => {
-      //   if (data !== null) {
-      //     history.push(`/chats/${data.addChat.id}`);
-      //   }
-      // });
     },
     [addChat, history]
   );

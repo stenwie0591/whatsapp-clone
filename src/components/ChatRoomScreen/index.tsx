@@ -79,9 +79,9 @@ const ChatRoomScreen: React.FC<ChatRoomScreenParams> = ({
             content,
           },
         },
-        // update: (client, { data: { addMessage } }) => {
-        //   writeMessage(client, addMessage);
-        // },
+        update: (client, { data: { addMessage } }) => {
+          writeMessage(client, addMessage);
+        },
       });
     },
     [data, chatId, addMessage]
