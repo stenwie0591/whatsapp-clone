@@ -1575,10 +1575,10 @@
   dependencies:
     "@types/jest-diff" "*"
 
-"@types/material-ui@0.21.6":
-  version "0.21.6"
-  resolved "https://registry.yarnpkg.com/@types/material-ui/-/material-ui-0.21.6.tgz#047377ac49e623c2dafe47ccdf8713dcb02bd793"
-  integrity sha512-zq0FVny7dwE94CvY0Z7ejKcGD5IYjqHPZNkC2Wb4r8z/K+YuqRWKcIG7YP5flow46vVeOkojBPHDnic7wSv4yw==
+"@types/material-ui@0.21.8":
+  version "0.21.8"
+  resolved "https://registry.yarnpkg.com/@types/material-ui/-/material-ui-0.21.8.tgz#a550778942b2e9791653aa2c4b1a35127c44cab6"
+  integrity sha512-Rsx3tRNoYkidDKfMfh+cegtOHMl73akzKnQ5pzxTrbx5oaUXLtG6YVlvtS43uebOSTDf8GQNaseB52r3zVagEg==
   dependencies:
     "@types/react" "*"
     "@types/react-addons-linked-state-mixin" "*"
